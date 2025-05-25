@@ -3,50 +3,55 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\User;
-
+use Illuminate\Support\Facades\Auth;
 
 class LoginController extends Controller
 {
-    public function index() {
-        return view('site.login', ['titulo' => 'Login']);
+    public function index(Request $request)
+    {
+        $erro = '';
+
+        if ($request->get('erro') == 1) {
+            $erro = 'E-mail e/ou senha não conferem.';
+        }
+
+        if ($request->get('erro') == 2) {
+            $erro = 'Necessário realizar login para acessar a página.';
+        }
+
+        return view('site.login', ['titulo' => 'Login', 'erro' => $erro]);
     }
 
-    public function autenticar(Request $request) {
-        //regras de validação
+    public function autenticar(Request $request)
+    {
         $regras = [
-            'usuario' => 'email',
-            'senha' => 'required'        
+            'email' => 'required|email',
+            'senha' => 'required'
         ];
 
-        //mensagens de feedback
         $feedback = [
-            'usuario.email' => 'O campo usuário(email) é obrigatório',
+            'email.required' => 'O campo e-mail é obrigatório',
+            'email.email' => 'Informe um e-mail válido',
             'senha.required' => 'O campo senha é obrigatório'
         ];
 
-        //se não passar pelo validate
         $request->validate($regras, $feedback);
 
-        //recuperamos parametros
-        $email = $request->get('usuario');
-        $password = $request->get('senha');
+        $credenciais = [
+            'email' => $request->get('email'),
+            'password' => $request->get('senha')
+        ];
 
-        echo "Usuario: $email | Senha: $password";
-        echo '<br>';
-
-        //iniciar o Model User
-        $user = new User();
-
-        $usuario = $user->where('email', $email)
-                        ->where('password', $password)
-                        ->get()
-                        ->first();
-
-        if(isset($usuario->name)) {
-            echo 'Usuario existe';
+        if (Auth::attempt($credenciais)) {
+            return redirect()->route('app.painel');
         } else {
-            echo 'Usuario não existe';
-        };
+            return redirect()->route('site.login', ['erro' => 1]);
+        }
+    }
+
+    public function sair()
+    {
+        Auth::logout();
+        return redirect()->route('site.login');
     }
 }

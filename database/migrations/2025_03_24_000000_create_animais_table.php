@@ -10,8 +10,11 @@ return new class extends Migration
     {
         Schema::create('animais', function (Blueprint $table) {
             $table->id();
-            $table->string('nome', 50);
-            $table->string('brinco_chip', 20)->unique();
+            $table->string('nome')->nullable();
+            $table->string('status')->nullable();
+            $table->decimal('peso', 5, 2)->nullable();
+            $table->string('sexo')->nullable();
+            $table->string('fertilidade')->nullable();
             $table->timestamps();
         });
     }
