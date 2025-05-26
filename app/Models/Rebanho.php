@@ -18,10 +18,14 @@ class Rebanho extends Model
 
     public function animais()
     {
-        return $this->hasMany(\App\Models\Animal::class);
+        return $this->hasManyThrough(
+            Animal::class,           
+            AnimalDetalhes::class,   
+            'rebanho_id',            
+            'id',                    
+            'id',                    
+            'animal_id'              
+        );
     }
-
-
-
-
 }
+

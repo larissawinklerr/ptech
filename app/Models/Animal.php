@@ -26,7 +26,8 @@ class Animal extends Model
 
     public function procedimentos()
     {
-        return $this->hasMany(Procedimento::class);
+        return $this->hasMany(Procedimento::class, 'animal_id');
     }
+
 }
 

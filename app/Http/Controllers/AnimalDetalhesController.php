@@ -8,13 +8,16 @@ use App\Models\Animal;
 
 class AnimalDetalhesController extends Controller
 {
+
     public function show($id)
     {
-        $animal = Animal::findOrFail($id);
+        $animal = Animal::with('procedimentos')->findOrFail($id);
         $detalhes = AnimalDetalhes::where('animal_id', $id)->first();
+        $procedimentos = $animal->procedimentos;
 
-        return view('app.animal_detalhes.show', compact('animal', 'detalhes'));
-    }
+        return view('app.animal_detalhes.show', compact('animal', 'detalhes', 'procedimentos'));
+    }   
+
 
     public function edit($id)
     {

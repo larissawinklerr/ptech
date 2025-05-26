@@ -1,15 +1,45 @@
-@extends('site.layouts.base')
-
+@extends('site.layouts.app-painel')
 
 @section('title', 'Painel')
 
 @section('content')
-    <h2>Olá, {{ Auth::user()->name }} 👋</h2>
+<div class="container text-center">
+    <h2 class="mb-4">Olá, {{ Auth::user()->name }} 👋</h2>
     <p>Escolha uma funcionalidade:</p>
 
-    <ul class="list-group">
-        <li class="list-group-item"><a href="{{ route('app.animais.index') }}">🐄 Animais</a></li>
-        <li class="list-group-item"><a href="#">🧪 Procedimentos</a></li>
-        <li class="list-group-item"><a href="#">📊 Relatórios</a></li>
-    </ul>
+    <div class="row justify-content-center">
+        <div class="col-md-3 col-6 mb-4">
+            <a href="{{ route('app.animais.index') }}" class="text-decoration-none text-dark">
+                <div class="card h-100 shadow-sm border-0">
+                    <div class="card-body text-center">
+                        <div style="font-size: 3rem;">🐄</div>
+                        <h5 class="mt-2">Animais</h5>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-md-3 col-6 mb-4">
+            <a href="{{ route('app.procedimentos.index') }}" class="text-decoration-none text-dark">
+                <div class="card h-100 shadow-sm border-0">
+                    <div class="card-body text-center">
+                        <div style="font-size: 3rem;">🧪</div>
+                        <h5 class="mt-2">Procedimentos</h5>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <div class="col-md-3 col-6 mb-4">
+            <a href="#" class="text-decoration-none text-dark">
+                <div class="card h-100 shadow-sm border-0">
+                    <div class="card-body text-center">
+                        <div style="font-size: 3rem;">📊</div>
+                        <h5 class="mt-2">Relatórios</h5>
+                    </div>
+                </div>
+            </a>
+        </div>
+    </div>
+</div>
 @endsection

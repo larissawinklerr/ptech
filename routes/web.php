@@ -7,6 +7,7 @@ use App\Http\Controllers\ContatoController;
 use App\Http\Controllers\AnimalController;
 use App\Http\Controllers\AnimalDetalhesController;
 use App\Http\Controllers\RebanhoController;
+use App\Http\Controllers\ProcedimentoController;
 
 
 Route::get('/', [PrincipalController::class, 'principal'])->name('site.index');
@@ -38,6 +39,7 @@ Route::middleware(['auth'])->prefix('app')->group(function () {
     Route::get('/animal-detalhes/{id}/edit', [AnimalDetalhesController::class, 'edit'])->name('app.animal_detalhes.edit');
     Route::put('/animal-detalhes/{id}', [AnimalDetalhesController::class, 'update'])->name('app.animal_detalhes.update');
 
+    // rotas rebanho
     Route::get('/rebanhos', [RebanhoController::class, 'index'])->name('app.rebanhos.index');
     Route::get('/rebanhos/create', [RebanhoController::class, 'create'])->name('app.rebanhos.create');
     Route::post('/rebanhos', [RebanhoController::class, 'store'])->name('app.rebanhos.store');
@@ -45,5 +47,11 @@ Route::middleware(['auth'])->prefix('app')->group(function () {
     Route::get('/rebanhos/{id}/edit', [RebanhoController::class, 'edit'])->name('app.rebanhos.edit');
     Route::put('/rebanhos/{id}', [RebanhoController::class, 'update'])->name('app.rebanhos.update');
     Route::delete('/rebanhos/{id}', [RebanhoController::class, 'destroy'])->name('app.rebanhos.destroy');
+
+    //rotas procedimento
+    Route::get('/procedimentos', [ProcedimentoController::class, 'index'])->name('app.procedimentos.index');
+    Route::get('/procedimentos/create', [ProcedimentoController::class, 'create'])->name('app.procedimentos.create');
+    Route::post('/procedimentos', [ProcedimentoController::class, 'store'])->name('app.procedimentos.store');
+    Route::delete('/procedimentos/{id}', [ProcedimentoController::class, 'destroy'])->name('app.procedimentos.destroy');
 
 });
