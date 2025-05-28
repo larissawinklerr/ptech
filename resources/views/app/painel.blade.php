@@ -1,4 +1,4 @@
-@extends('site.layouts.app-painel')
+@extends('site.layouts.base')
 
 @section('title', 'Painel')
 

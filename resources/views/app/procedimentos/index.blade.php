@@ -1,35 +1,29 @@
 @extends('site.layouts.app')
 
-@section('content')
-<div class="container">
-    @if(session('success'))
-        <div class="alert alert-success">{{ session('success') }}</div>
-    @endif
 
-    <div class="d-flex justify-content-between align-items-center mb-3">
+@section('title', 'Procedimentos')
+
+@section('content')
+<div class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
         <h2>Procedimentos</h2>
         <a href="{{ route('app.procedimentos.create') }}" class="btn btn-success">+ Novo Procedimento</a>
     </div>
 
-    @if($procedimentos->count())
-        <ul class="list-group">
-            @foreach($procedimentos as $proc)
-                <li class="list-group-item">
-                    <strong>{{ $proc->nome }}</strong> - {{ $proc->tipo }} ({{ $proc->aplicacao }})<br>
-                    Animal: {{ $proc->animal->id }}<br>
-                    {{ $proc->observacoes }}<br>
-                    <small>{{ \Carbon\Carbon::parse($proc->data)->format('d/m/Y') }}</small>
-
-                    <form method="POST" action="{{ route('app.procedimentos.destroy', $proc->id) }}" class="d-inline float-end">
-                        @csrf
-                        @method('DELETE')
-                        <button class="btn btn-sm btn-danger" onclick="return confirm('Deseja deletar este procedimento?')">Excluir</button>
-                    </form>
-                </li>
-            @endforeach
-        </ul>
-    @else
-        <p>Nenhum procedimento encontrado.</p>
-    @endif
+    @foreach ($procedimentos as $procedimento)
+        <div class="card mb-3 shadow-sm" style="background-color: rgba(255, 255, 255, 0.95);">
+            <div class="card-body">
+                <p class="mb-1"><strong>- {{ $procedimento->descricao }}</strong> ({{ $procedimento->tipo }})</p>
+                <p class="mb-1">Animal: {{ $procedimento->animal_id }}</p>
+                <p class="mb-1">{{ $procedimento->detalhes }}</p>
+                <p class="mb-3">{{ $procedimento->data }}</p>
+                <form action="{{ route('app.procedimentos.destroy', $procedimento->id) }}" method="POST">
+                    @csrf
+                    @method('DELETE')
+                    <button class="btn btn-danger btn-sm">Excluir</button>
+                </form>
+            </div>
+        </div>
+    @endforeach
 </div>
 @endsection

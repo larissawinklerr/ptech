@@ -16,8 +16,8 @@
         }
 
         .topo {
-            background-color: #2e1b08;
-            padding: 10px 40px;
+            background-color: rgba(46, 27, 8, 0.85);
+            padding: 15px 30px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -33,11 +33,6 @@
             margin-right: 15px;
         }
 
-        .logo span {
-            color: #fff;
-        }
-
-
         .conteudo {
             padding: 50px 20px;
         }
@@ -47,7 +42,7 @@
 
     <div class="topo">
         <div class="logo">
-            <img src="{{ asset('img/logo-ptech.png') }}" alt="Logo PTECH" style="height: 50px;">
+            <img src="{{ asset('img/logo-ptech.png') }}" alt="Logo PTECH">
             <span class="ms-2 fw-bold text-white">PTECH 2025</span>
         </div>
 

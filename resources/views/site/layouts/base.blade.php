@@ -1,3 +1,5 @@
+@php use Illuminate\Support\Facades\Auth; @endphp
+
 <!DOCTYPE html>
 <html lang="pt-br">
 <head>
@@ -13,22 +15,28 @@
             font-family: 'Roboto', sans-serif;
             color: #fff;
             min-height: 100vh;
+            margin: 0;
         }
 
         .topo {
-            background-color: #2e1b08;
-            padding: 10px 40px;
+            background-color: rgba(0, 0, 0, 0.4);
+            padding: 10px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
         }
 
         .topo h1 {
-            color: #fff;
+            margin: 0;
             font-size: 24px;
+            color: #fff;
         }
 
         .menu a {
             color: #fff;
-            margin-right: 20px;
+            margin-left: 20px;
             text-decoration: none;
+            font-weight: bold;
         }
 
         .menu a:hover {
@@ -36,42 +44,41 @@
         }
 
         .conteudo {
-            padding: 100px 20px;
-        }
-
-        .card-custom {
-            background-color: rgba(255, 255, 255, 0.95);
-            border-radius: 10px;
-            padding: 30px;
-            color: #333;
-            box-shadow: 0 0 10px rgba(0,0,0,0.2);
+            padding: 50px 20px;
         }
     </style>
 </head>
 <body>
 
-<div class="topo">
-    <div class="menu">
-    <a href="{{ route('site.index') }}">Principal</a>
-    <a href="{{ route('site.sobrenos') }}">Sobre Nós</a>
-    <a href="{{ route('site.contato') }}">Contato</a>
+    <div class="topo">
+        <h1>PTECH</h1>
+        <div class="menu">
+            @php
+                $isApp = request()->is('app') || request()->is('app/*');
+            @endphp
 
-    @if (request()->routeIs('site.index'))
-        <a href="{{ route('site.login') }}">Login</a>
-        <a href="{{ route('site.register') }}">Cadastro</a>
-    @elseif (Auth::check())
-        <a href="{{ route('app.painel') }}">Painel</a>
-        <a href="{{ route('site.logout') }}">Sair</a>
-    @else
-        <a href="{{ route('site.login') }}">Login</a>
-    @endif
-</div>
+            @if (!$isApp)
+                <a href="{{ route('site.index') }}">Principal</a>
+                <a href="{{ route('site.sobrenos') }}">Sobre Nós</a>
+                <a href="{{ route('site.contato') }}">Contato</a>
 
-</div>
+                @guest
+                    <a href="{{ route('site.login') }}">Login</a>
+                    <a href="{{ route('site.register') }}">Cadastro</a>
+                @endguest
+            @endif
 
-<div class="conteudo">
-    @yield('content')
-</div>
+            @auth
+                @if ($isApp)
+                    <a href="{{ route('site.logout') }}">Sair</a>
+                @endif
+            @endauth
+        </div>
+    </div>
+
+    <div class="conteudo">
+        @yield('content')
+    </div>
 
 </body>
 </html>
