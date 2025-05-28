@@ -1,5 +1,8 @@
+@php use Illuminate\Support\Facades\Auth; @endphp
+
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <title>{{ $titulo ?? 'PTECH - Sistema' }}</title>
@@ -47,6 +50,7 @@
         }
     </style>
 </head>
+
 <body>
 
     <div class="topo d-flex justify-content-between align-items-center">
@@ -55,12 +59,22 @@
             <a href="{{ route('site.index') }}">Principal</a>
             <a href="{{ route('site.sobrenos') }}">Sobre Nós</a>
             <a href="{{ route('site.contato') }}">Contato</a>
-        </div>
-    </div>
 
-    <div class="conteudo">
-        @yield('content')
-    </div>
+            @if (request()->routeIs('site.index'))
+                <a href="{{ route('site.login') }}">Login</a>
+                <a href="{{ route('site.register') }}">Cadastro</a>
+            @elseif (!Auth::check())
+                <a href="{{ route('site.login') }}">Login</a>
+            @else
+                <a href="{{ route('site.logout') }}">Sair</a>
+            @endif
+        </div>
+
+
+        <div class="conteudo">
+            @yield('content')
+        </div>
 
 </body>
+
 </html>

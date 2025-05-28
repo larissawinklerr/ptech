@@ -52,19 +52,21 @@
 
 <div class="topo">
     <div class="menu">
-        <a href="{{ route('site.index') }}">Principal</a>
-        <a href="{{ route('site.sobrenos') }}">Sobre Nós</a>
-        <a href="{{ route('site.contato') }}">Contato</a>
+    <a href="{{ route('site.index') }}">Principal</a>
+    <a href="{{ route('site.sobrenos') }}">Sobre Nós</a>
+    <a href="{{ route('site.contato') }}">Contato</a>
 
-        @auth
-            <a href="{{ route('app.painel') }}">Painel</a>
-            <a href="{{ route('site.logout') }}">Sair</a>
-        @endauth
+    @if (request()->routeIs('site.index'))
+        <a href="{{ route('site.login') }}">Login</a>
+        <a href="{{ route('site.register') }}">Cadastro</a>
+    @elseif (Auth::check())
+        <a href="{{ route('app.painel') }}">Painel</a>
+        <a href="{{ route('site.logout') }}">Sair</a>
+    @else
+        <a href="{{ route('site.login') }}">Login</a>
+    @endif
+</div>
 
-        @guest
-            <a href="{{ route('site.login') }}">Login</a>
-        @endguest
-    </div>
 </div>
 
 <div class="conteudo">

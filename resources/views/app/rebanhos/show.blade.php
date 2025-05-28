@@ -11,7 +11,7 @@
             @foreach($rebanho->animais as $animal)
                 <li>
                     {{ $animal->detalhes->nome ?? 'Sem nome' }} - 
-                    {{ $animal->d  etalhes->brinco_chip ?? 'Sem chip' }}
+                    {{ $animal->detalhes->brinco_chip ?? 'Sem chip' }}
                 </li>
             @endforeach
         </ul>

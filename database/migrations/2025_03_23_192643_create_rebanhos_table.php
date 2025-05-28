@@ -11,6 +11,7 @@ return new class extends Migration
         Schema::create('rebanhos', function (Blueprint $table) {
             $table->id();
             $table->string('nome');
+            $table->unsignedBigInteger('rebanho_id')->nullable();
             $table->text('descricao')->nullable();
             $table->timestamps();
         });

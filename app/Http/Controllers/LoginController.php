@@ -54,4 +54,9 @@ class LoginController extends Controller
         Auth::logout();
         return redirect()->route('site.login');
     }
+
+    public function register()
+    {
+        return view('site.register', ['titulo' => 'Cadastro']);
+    }
 }
