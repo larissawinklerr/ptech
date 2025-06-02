@@ -1,6 +1,5 @@
 @extends('site.layouts.app')
 
-
 @section('title', 'Detalhes do Animal')
 
 @section('content')

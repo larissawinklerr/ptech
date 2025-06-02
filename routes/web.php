@@ -3,7 +3,6 @@
 use App\Http\Controllers\LoginController;
 use App\Http\Controllers\PrincipalController;
 use App\Http\Controllers\SobreNosController;
-use App\Http\Controllers\ContatoController;
 use App\Http\Controllers\AnimalController;
 use App\Http\Controllers\AnimalDetalhesController;
 use App\Http\Controllers\RebanhoController;
@@ -11,9 +10,9 @@ use App\Http\Controllers\ProcedimentoController;
 use App\Http\Controllers\RegisterController;
 
 
+
 Route::get('/', [PrincipalController::class, 'principal'])->name('site.index');
 Route::get('/sobre-nos', [SobreNosController::class, 'sobreNos'])->name('site.sobrenos');
-Route::get('/contato', [ContatoController::class, 'contato'])->name('site.contato');
 Route::get('/login', [LoginController::class, 'index'])->name('site.login');
 Route::get('/register', [RegisterController::class, 'show'])->name('site.register');
 Route::post('/register', [RegisterController::class, 'store'])->name('site.register.store');
@@ -59,5 +58,7 @@ Route::middleware(['auth'])->prefix('app')->group(function () {
     Route::get('/procedimentos/{id}/edit', [ProcedimentoController::class, 'edit'])->name('app.procedimentos.edit');
     Route::put('/procedimentos/{id}', [ProcedimentoController::class, 'update'])->name('app.procedimentos.update');
     Route::delete('/procedimentos/{id}', [ProcedimentoController::class, 'destroy'])->name('app.procedimentos.destroy');
+
+
 
 });

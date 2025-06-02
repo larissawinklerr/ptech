@@ -60,7 +60,6 @@
             @if (!$isApp)
                 <a href="{{ route('site.index') }}">Principal</a>
                 <a href="{{ route('site.sobrenos') }}">Sobre Nós</a>
-                <a href="{{ route('site.contato') }}">Contato</a>
 
                 @guest
                     <a href="{{ route('site.login') }}">Login</a>

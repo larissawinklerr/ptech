@@ -1,4 +1,5 @@
-@extends('site.layouts.app') {{-- ajuste se o layout estiver em outra pasta --}}
+@extends('site.layouts.base')
+
 
 @section('content')
     <div class="container mt-5">
