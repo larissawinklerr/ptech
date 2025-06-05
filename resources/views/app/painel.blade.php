@@ -1,16 +1,18 @@
-@extends('site.layouts.base')
+@extends('site.layouts.app')
 
 @section('title', 'Painel')
 
 @section('content')
-<div class="container text-center">
+<div class="container text-center mt-5">
     <h2 class="mb-4">Olá, {{ Auth::user()->name }} 👋</h2>
-    <p>Escolha uma funcionalidade:</p>
+    <p class="mb-5">Escolha uma funcionalidade:</p>
 
     <div class="row justify-content-center">
+
+        <!-- Card Animais -->
         <div class="col-md-3 col-6 mb-4">
             <a href="{{ route('app.animais.index') }}" class="text-decoration-none text-dark">
-                <div class="card h-100 shadow-sm border-0">
+                <div class="card h-100 shadow-sm border-0 hover-card">
                     <div class="card-body text-center">
                         <div style="font-size: 3rem;">🐄</div>
                         <h5 class="mt-2">Animais</h5>
@@ -19,9 +21,10 @@
             </a>
         </div>
 
+        <!-- Card Procedimentos -->
         <div class="col-md-3 col-6 mb-4">
             <a href="{{ route('app.procedimentos.index') }}" class="text-decoration-none text-dark">
-                <div class="card h-100 shadow-sm border-0">
+                <div class="card h-100 shadow-sm border-0 hover-card">
                     <div class="card-body text-center">
                         <div style="font-size: 3rem;">🧪</div>
                         <h5 class="mt-2">Procedimentos</h5>
@@ -30,9 +33,22 @@
             </a>
         </div>
 
+        <!-- Card Rebanhos -->
+        <div class="col-md-3 col-6 mb-4">
+            <a href="{{ route('app.rebanhos.index') }}" class="text-decoration-none text-dark">
+                <div class="card h-100 shadow-sm border-0 hover-card">
+                    <div class="card-body text-center">
+                        <div style="font-size: 3rem;">🐂</div>
+                        <h5 class="mt-2">Rebanhos</h5>
+                    </div>
+                </div>
+            </a>
+        </div>
+
+        <!-- Card Relatórios -->
         <div class="col-md-3 col-6 mb-4">
             <a href="#" class="text-decoration-none text-dark">
-                <div class="card h-100 shadow-sm border-0">
+                <div class="card h-100 shadow-sm border-0 hover-card">
                     <div class="card-body text-center">
                         <div style="font-size: 3rem;">📊</div>
                         <h5 class="mt-2">Relatórios</h5>
@@ -40,6 +56,21 @@
                 </div>
             </a>
         </div>
+
     </div>
 </div>
 @endsection
+
+@push('styles')
+<style>
+    .hover-card {
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        border-radius: 12px;
+    }
+
+    .hover-card:hover {
+        transform: scale(1.05);
+        box-shadow: 0 8px 16px rgba(0,0,0,0.15);
+    }
+</style>
+@endpush
