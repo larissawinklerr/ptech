@@ -8,14 +8,15 @@ use App\Http\Controllers\AnimalDetalhesController;
 use App\Http\Controllers\RebanhoController;
 use App\Http\Controllers\ProcedimentoController;
 use App\Http\Controllers\RegisterController;
+use App\Http\Controllers\RelatorioController;
 
 // Rotas públicas com cache desabilitado
-    Route::get('/', [PrincipalController::class, 'principal'])->name('site.index');
-    Route::get('/sobre-nos', [SobreNosController::class, 'sobreNos'])->name('site.sobrenos');
-    Route::get('/login/{erro?}', [LoginController::class, 'index'])->name('site.login');
-    Route::post('/login', [LoginController::class, 'autenticar']);
-    Route::get('/register', [RegisterController::class, 'show'])->name('site.register');
-    Route::post('/register', [RegisterController::class, 'store'])->name('site.register.store');
+Route::get('/', [PrincipalController::class, 'principal'])->name('site.index');
+Route::get('/sobre-nos', [SobreNosController::class, 'sobreNos'])->name('site.sobrenos');
+Route::get('/login/{erro?}', [LoginController::class, 'index'])->name('site.login');
+Route::post('/login', [LoginController::class, 'autenticar']);
+Route::get('/register', [RegisterController::class, 'show'])->name('site.register');
+Route::post('/register', [RegisterController::class, 'store'])->name('site.register.store');
 
 // Logout
 Route::get('/logout', [LoginController::class, 'sair'])->name('site.logout');
@@ -56,4 +57,11 @@ Route::middleware(['auth'])->prefix('app')->group(function () {
     Route::get('/procedimentos/{id}/edit', [ProcedimentoController::class, 'edit'])->name('app.procedimentos.edit');
     Route::put('/procedimentos/{id}', [ProcedimentoController::class, 'update'])->name('app.procedimentos.update');
     Route::delete('/procedimentos/{id}', [ProcedimentoController::class, 'destroy'])->name('app.procedimentos.destroy');
+
+    // Relatório
+    Route::get('/relatorios', [RelatorioController::class, 'index'])->name('relatorio.index');
+    Route::get('/relatorios/animais', [RelatorioController::class, 'todos'])->name('relatorio.animais');
+    Route::get('/relatorios/animais/filtrado', [RelatorioController::class, 'filtrado'])->name('relatorio.animais.filtrado');
+
+
 });

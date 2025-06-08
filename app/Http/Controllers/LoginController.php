@@ -9,23 +9,23 @@ use Illuminate\Support\Facades\Cookie;
 class LoginController extends Controller
 {
     public function index(Request $request)
-{
-    if (Auth::check()) {
-        return redirect()->route('app.painel');
+    {
+        if (Auth::check()) {
+            return redirect()->route('app.painel');
+        }
+
+        $erro = '';
+
+        if ($request->get('erro') == 1) {
+            $erro = 'E-mail e/ou senha não conferem.';
+        }
+
+        if ($request->get('erro') == 2) {
+            $erro = 'Necessário realizar login para acessar a página.';
+        }
+
+        return view('site.login', ['titulo' => 'Login', 'erro' => $erro]);
     }
-
-    $erro = '';
-
-    if ($request->get('erro') == 1) {
-        $erro = 'E-mail e/ou senha não conferem.';
-    }
-
-    if ($request->get('erro') == 2) {
-        $erro = 'Necessário realizar login para acessar a página.';
-    }
-
-    return view('site.login', ['titulo' => 'Login', 'erro' => $erro]);
-}
 
 
     public function autenticar(Request $request)
@@ -55,16 +55,16 @@ class LoginController extends Controller
         }
     }
 
-public function sair(Request $request)
-{
-    Auth::logout();
-    $request->session()->invalidate();
-    $request->session()->regenerateToken();
-    $recaller = Auth::getRecallerName();
-    Cookie::queue(Cookie::forget($recaller));
+    public function sair(Request $request)
+    {
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        $recaller = Auth::getRecallerName();
+        Cookie::queue(Cookie::forget($recaller));
 
-    return redirect()->route('site.login');
-}
+        return redirect()->route('site.login');
+    }
 
 
     public function register()

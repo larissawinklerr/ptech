@@ -107,4 +107,3 @@ class ProcedimentoController extends Controller
         return redirect()->back()->with('success', 'Procedimento removido com sucesso!');
     }
 }
-

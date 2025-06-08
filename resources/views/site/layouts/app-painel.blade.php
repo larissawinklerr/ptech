@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <title>@yield('title', 'PTECH - Sistema')</title>
@@ -38,6 +39,7 @@
         }
     </style>
 </head>
+
 <body>
 
     <div class="topo">
@@ -56,4 +58,5 @@
     </div>
 
 </body>
+
 </html>

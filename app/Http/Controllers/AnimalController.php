@@ -83,7 +83,10 @@ class AnimalController extends Controller
             ->firstOrFail();
 
         $animal->update($request->only([
-            'nome', 'status', 'sexo', 'fertilidade'
+            'nome',
+            'status',
+            'sexo',
+            'fertilidade'
         ]));
 
         $detalhes = AnimalDetalhes::where('animal_id', $id)->firstOrFail();
@@ -100,26 +103,26 @@ class AnimalController extends Controller
         return redirect()->route('app.animais.index')->with('success', 'Animal atualizado com sucesso!');
     }
 
-public function show($id)
-{
-    $animal = Animal::with('detalhes')
-        ->where('id', $id)
-        ->where('user_id', Auth::id())
-        ->firstOrFail();
+    public function show($id)
+    {
+        $animal = Animal::with('detalhes')
+            ->where('id', $id)
+            ->where('user_id', Auth::id())
+            ->firstOrFail();
 
-    $procedimentosDiretos = $animal->procedimentos;
+        $procedimentosDiretos = $animal->procedimentos;
 
-    $procedimentosPorLote = collect();
-    if ($animal->detalhes && !empty($animal->detalhes->rebanho_id)) {
-        $procedimentosPorLote = \App\Models\Procedimento::where('rebanho_id', $animal->detalhes->rebanho_id)
-            ->whereNull('animal_id')
-            ->get();
+        $procedimentosPorLote = collect();
+        if ($animal->detalhes && !empty($animal->detalhes->rebanho_id)) {
+            $procedimentosPorLote = \App\Models\Procedimento::where('rebanho_id', $animal->detalhes->rebanho_id)
+                ->whereNull('animal_id')
+                ->get();
+        }
+
+        $procedimentos = $procedimentosDiretos->merge($procedimentosPorLote);
+
+        return view('app.animais.show', compact('animal', 'procedimentos'));
     }
-
-    $procedimentos = $procedimentosDiretos->merge($procedimentosPorLote);
-
-    return view('app.animais.show', compact('animal', 'procedimentos'));
-}
 
 
     public function destroy($id)

@@ -2,6 +2,7 @@
 
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <title>{{ $titulo ?? 'PTECH - Sistema' }}</title>
@@ -22,7 +23,7 @@
 
         .topo {
             background-color: rgba(77, 37, 1, 0.8);
-            padding: 10px 30px;
+            padding: 5px 20px;
             display: flex;
             justify-content: space-between;
             align-items: center;
@@ -47,17 +48,18 @@
         }
 
         .botao-destaque {
-    background-color: #c69038;
-    color: #fff !important;
-    padding: 6px 16px;
-    border-radius: 20px;
-    margin-left: 20px;
-    transition: background 0.3s;
-}
-.botao-destaque:hover {
-    background-color: #a8742c;
-    color: #fff;
-}
+            background-color: #c69038;
+            color: #fff !important;
+            padding: 6px 16px;
+            border-radius: 20px;
+            margin-left: 20px;
+            transition: background 0.3s;
+        }
+
+        .botao-destaque:hover {
+            background-color: #a8742c;
+            color: #fff;
+        }
 
 
         .conteudo {
@@ -73,12 +75,15 @@
             border-radius: 12px;
             box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
         }
-
     </style>
 </head>
+
 <body>
     <div class="topo">
-        <h1>PTECH</h1>
+        <a href="{{ route('site.index') }}">
+            <img src="{{ asset('img/logo-ptech.png') }}" alt="Logo PTECH" style="height: 60px;">
+        </a>
+
         <div class="menu">
             @php
                 $isApp = request()->is('app') || request()->is('app/*');
@@ -95,39 +100,41 @@
                 @endguest
             @endif
 
-@auth
-    @if ($isApp)
-        <form id="logout-form" action="{{ route('site.logout') }}" method="POST" style="display: inline;">
-            @csrf
-            <button type="submit" class="btn btn-link text-white" style="text-decoration: none; border: none; background: none; padding: 0; margin-left: 20px;">
-                <i class="fas fa-sign-out-alt"></i> Sair
-            </button>
-        </form>
-    @endif
-@endauth
+            @auth
+                @if ($isApp)
+                    <form id="logout-form" action="{{ route('site.logout') }}" method="POST" style="display: inline;">
+                        @csrf
+                        <button type="submit" class="btn btn-link text-white"
+                            style="text-decoration: none; border: none; background: none; padding: 0; margin-left: 20px;">
+                            <i class="fas fa-sign-out-alt"></i> Sair
+                        </button>
+                    </form>
+                @endif
+            @endauth
 
         </div>
     </div>
 
-    @if($isHome)
+    @if ($isHome)
         <div class="fundo-home">
     @endif
 
-        <div class="conteudo">
-            @yield('content')
-        </div>
+    <div class="conteudo">
+        @yield('content')
+    </div>
 
-        @if($isHome)
+    @if ($isHome)
         </div>
     @endif
 
     @if (!Auth::check() && request()->is('app/*'))
-    <script>
-        alert("Sessão expirada ou acesso não autorizado. Faça login novamente.");
-        window.location.href = "{{ route('login') }}";
-    </script>
-@endif
+        <script>
+            alert("Sessão expirada ou acesso não autorizado. Faça login novamente.");
+            window.location.href = "{{ route('login') }}";
+        </script>
+    @endif
 
 
 </body>
+
 </html>

@@ -29,6 +29,4 @@ class Animal extends Model
     {
         return $this->hasMany(Procedimento::class, 'animal_id');
     }
-
 }
-

@@ -37,7 +37,7 @@ class RebanhoController extends Controller
 
         if ($request->has('animais')) {
             AnimalDetalhes::whereIn('animal_id', $request->animais)
-                          ->update(['rebanho_id' => $rebanho->id]);
+                ->update(['rebanho_id' => $rebanho->id]);
         }
 
         return redirect()->route('app.rebanhos.index')->with('success', 'Rebanho criado com sucesso!');
@@ -104,4 +104,3 @@ class RebanhoController extends Controller
         return back()->with('success', 'Animal removido do rebanho.');
     }
 }
-

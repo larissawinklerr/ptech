@@ -1,4 +1,5 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use App\Models\User;
@@ -9,7 +10,7 @@ class RegisterController extends Controller
 {
     public function show()
     {
-        return view('site.register'); // Crie esse Blade: resources/views/site/register.blade.php
+        return view('site.register');
     }
 
     public function store(Request $request)

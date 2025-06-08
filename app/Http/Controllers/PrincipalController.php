@@ -6,16 +6,13 @@ use Illuminate\Http\Request;
 
 class PrincipalController extends Controller
 {
-    // Página pública
     public function principal()
     {
-        return view('site.principal'); // certifique-se que esse arquivo existe
+        return view('site.principal');
     }
 
-    // Painel após login
     public function painel()
     {
         return view('app.painel');
     }
 }
-
