@@ -1,32 +1,21 @@
 @extends('site.layouts.base')
 
+@section('title', 'Página Inicial')
 
 @section('content')
-    <div class="container mt-5">
-        <h1 class="text-white">PTECH - Gestão Pecuária</h1>
-        <p class="text-white">Gerencie seu rebanho de forma eficiente e organizada com nossa plataforma de gestão pecuária.</p>
+<div class="container d-flex justify-content-center align-items-center" style="min-height: 80vh;">
+    <div class="w-100 p-5 bg-white rounded shadow" style="max-width: 900px;">
+        <h1 class="fw-bold text-dark text-center mb-4">PTECH - Gestão Pecuária</h1>
+        <p class="fs-5 text-secondary text-center mb-4">
+            Gerencie seu rebanho de forma eficiente e organizada com nossa plataforma de gestão pecuária.
+        </p>
 
-        <div class="mt-4">
-            <div class="mb-2">
-                <img src="{{ asset('img/check.png') }}" style="width: 24px;" alt="Check">
-                <span class="text-white">Acesse de qualquer lugar, a qualquer momento.</span>
-            </div>
-            <div class="mb-2">
-                <img src="{{ asset('img/check.png') }}" style="width: 24px;" alt="Check">
-                <span class="text-white">Transforme sua fazenda com tecnologia!</span>
-            </div>
-            <div class="mb-2">
-                <img src="{{ asset('img/check.png') }}" style="width: 24px;" alt="Check">
-                <span class="text-white">Gerencie a vacinação do seu gado e mantenha a saúde do rebanho em dia.</span>
-            </div>
-            <div class="mb-2">
-                <img src="{{ asset('img/check.png') }}" style="width: 24px;" alt="Check">
-                <span class="text-white">Registre nascimentos, manejos e ocorrências de forma organizada e segura.</span>
-            </div>
-        </div>
-
-        <div class="text-center mt-5">
-            <img src="{{ asset('img/inicial.png') }}" alt="Banner" class="img-fluid rounded shadow" style="max-width: 700px;">
-        </div>
+        <ul class="list-unstyled fs-6 text-secondary" style="max-width: 750px; margin: 0 auto;">
+            <li class="mb-3"><i class="fa-solid fa-globe text-success me-2"></i> Acesse de qualquer lugar, a qualquer momento.</li>
+            <li class="mb-3"><i class="fa-solid fa-microchip text-success me-2"></i> Transforme sua fazenda com tecnologia!</li>
+            <li class="mb-3"><i class="fa-solid fa-syringe text-success me-2"></i> Gerencie a vacinação do seu gado e mantenha a saúde do rebanho em dia.</li>
+            <li class="mb-3"><i class="fa-solid fa-notes-medical text-success me-2"></i> Registre nascimentos, manejos e ocorrências com segurança.</li>
+        </ul>
     </div>
+</div>
 @endsection

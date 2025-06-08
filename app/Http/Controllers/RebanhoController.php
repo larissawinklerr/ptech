@@ -86,4 +86,14 @@ class RebanhoController extends Controller
         Rebanho::destroy($id);
         return redirect()->route('app.rebanhos.index')->with('success', 'Rebanho excluído com sucesso!');
     }
+
+    public function removerAnimal($id)
+{
+    $animal = AnimalDetalhes::findOrFail($id);
+    $animal->rebanho_id = null;
+    $animal->save();
+
+    return back()->with('success', 'Animal removido do rebanho.');
+}
+
 }

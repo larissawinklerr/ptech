@@ -1,15 +1,28 @@
 @extends('site.layouts.base')
 
+@section('title', 'Sobre Nós')
+
 @section('content')
-<div class="container text-center text-white mt-5">
-    <h2 class="mb-4">Sobre Nós – PTECH 2025</h2>
-    <p class="mb-4">
-        Na <strong>PTECH</strong>, acreditamos que a tecnologia é a chave para uma pecuária mais eficiente, sustentável e lucrativa.
-        Nossa missão é transformar a maneira como os pecuaristas gerenciam seus rebanhos, oferecendo uma plataforma intuitiva e poderosa para facilitar o dia a dia no campo.
-    </p>
-    <p>
-        Com anos de experiência no setor agropecuário e uma equipe apaixonada por inovação, desenvolvemos uma solução que permite acompanhar de perto cada detalhe da sua fazenda.
-        Desde o monitoramento do rebanho até o controle de vacinas, manejos e finanças, nossa plataforma garante mais controle, segurança e praticidade.
-    </p>
+<div class="container my-5">
+    <h1 class="text-center fw-bold mb-4">Sobre a PTECH</h1>
+    <p class="text-center mb-5 fs-5">Facilitamos a vida do pecuarista com tecnologia, praticidade e inovação.</p>
+
+    <div class="row text-center">
+        <div class="col-md-4 mb-4">
+            <i class="fa-solid fa-cow fa-3x mb-3 text-success"></i>
+            <h5 class="fw-bold">Gestão de Rebanhos</h5>
+            <p>Organize, acompanhe e monitore seus animais de forma digital e acessível.</p>
+        </div>
+        <div class="col-md-4 mb-4">
+            <i class="fa-solid fa-laptop fa-3x mb-3 text-primary"></i>
+            <h5 class="fw-bold">Tecnologia no Campo</h5>
+            <p>Levamos a modernização até você, com ferramentas intuitivas e práticas.</p>
+        </div>
+        <div class="col-md-4 mb-4">
+            <i class="fa-solid fa-chart-line fa-3x mb-3 text-danger"></i>
+            <h5 class="fw-bold">Produtividade</h5>
+            <p>Transforme dados em decisões inteligentes e aumente a eficiência da sua produção.</p>
+        </div>
+    </div>
 </div>
 @endsection

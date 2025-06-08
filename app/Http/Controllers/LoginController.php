@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Cookie;
 
 class LoginController extends Controller
 {
@@ -49,11 +50,19 @@ class LoginController extends Controller
         }
     }
 
-    public function sair()
-    {
-        Auth::logout();
-        return redirect()->route('site.login');
-    }
+public function sair(Request $request)
+{
+    Auth::logout();
+    $request->session()->invalidate();
+    $request->session()->regenerateToken();
+
+    // Limpar cookie 'remember_me' se estiver configurado
+    $recaller = Auth::getRecallerName(); // nome padrão: remember_web_*
+    Cookie::queue(Cookie::forget($recaller));
+
+    return redirect()->route('site.login');
+}
+
 
     public function register()
     {

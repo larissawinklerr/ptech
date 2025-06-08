@@ -52,9 +52,24 @@ class AnimalController extends Controller
 
     public function update(Request $request, $id)
     {
+        // Atualiza dados da tabela animais
         $animal = Animal::findOrFail($id);
-        $animal->update($request->all());
-        return redirect()->route('app.animais.index');
+        $animal->update($request->only([
+            'nome', 'status', 'peso', 'sexo', 'fertilidade'
+        ]));
+
+        // Atualiza dados da tabela animal_detalhes
+        $detalhes = AnimalDetalhes::where('animal_id', $id)->firstOrFail();
+        $detalhes->update([
+            'nome'            => $request->input('nome'),
+            'raca'            => $request->input('raca'),
+            'peso_nascimento' => $request->input('peso_nascimento'),
+            'peso_atual'      => $request->input('peso_atual'),
+            'brinco_chip'     => $request->input('brinco_chip'),
+            'rebanho_id'      => $request->filled('rebanho_id') ? $request->rebanho_id : null,
+        ]);
+
+        return redirect()->route('app.animais.index')->with('success', 'Animal atualizado com sucesso!');
     }
 
     public function show($id)
@@ -64,14 +79,19 @@ class AnimalController extends Controller
     }
 
     public function destroy($id)
-    {
-        Animal::destroy($id);
-        return redirect()->route('app.animais.index');
-    }
+{
+    // Apaga os detalhes do animal primeiro
+    AnimalDetalhes::where('animal_id', $id)->delete();
+
+    // Agora pode apagar o animal
+    Animal::destroy($id);
+
+    return redirect()->route('app.animais.index')->with('success', 'Animal excluído com sucesso!');
+}
+
 
     public function gerarRelatorio($id)
     {
         return "Relatório do animal ID: " . $id;
     }
 }
-
