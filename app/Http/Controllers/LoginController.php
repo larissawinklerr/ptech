@@ -9,19 +9,24 @@ use Illuminate\Support\Facades\Cookie;
 class LoginController extends Controller
 {
     public function index(Request $request)
-    {
-        $erro = '';
-
-        if ($request->get('erro') == 1) {
-            $erro = 'E-mail e/ou senha não conferem.';
-        }
-
-        if ($request->get('erro') == 2) {
-            $erro = 'Necessário realizar login para acessar a página.';
-        }
-
-        return view('site.login', ['titulo' => 'Login', 'erro' => $erro]);
+{
+    if (Auth::check()) {
+        return redirect()->route('app.painel');
     }
+
+    $erro = '';
+
+    if ($request->get('erro') == 1) {
+        $erro = 'E-mail e/ou senha não conferem.';
+    }
+
+    if ($request->get('erro') == 2) {
+        $erro = 'Necessário realizar login para acessar a página.';
+    }
+
+    return view('site.login', ['titulo' => 'Login', 'erro' => $erro]);
+}
+
 
     public function autenticar(Request $request)
     {
@@ -55,9 +60,7 @@ public function sair(Request $request)
     Auth::logout();
     $request->session()->invalidate();
     $request->session()->regenerateToken();
-
-    // Limpar cookie 'remember_me' se estiver configurado
-    $recaller = Auth::getRecallerName(); // nome padrão: remember_web_*
+    $recaller = Auth::getRecallerName();
     Cookie::queue(Cookie::forget($recaller));
 
     return redirect()->route('site.login');

@@ -10,13 +10,27 @@ class AnimalDetalhesController extends Controller
 {
 
     public function show($id)
-    {
-        $animal = Animal::with('procedimentos')->findOrFail($id);
-        $detalhes = AnimalDetalhes::where('animal_id', $id)->first();
-        $procedimentos = $animal->procedimentos;
+{
+    $animal = Animal::with('detalhes')->findOrFail($id);
 
-        return view('app.animal_detalhes.show', compact('animal', 'detalhes', 'procedimentos'));
-    }   
+    $detalhes = $animal->detalhes;
+
+    // Procedimentos diretos
+    $procedimentosDiretos = $animal->procedimentos;
+
+    // Procedimentos do rebanho
+    $procedimentosPorLote = collect();
+    if ($detalhes && !empty($detalhes->rebanho_id)) {
+        $procedimentosPorLote = \App\Models\Procedimento::where('rebanho_id', $detalhes->rebanho_id)
+            ->whereNull('animal_id')
+            ->get();
+    }
+
+    $procedimentos = $procedimentosDiretos->merge($procedimentosPorLote);
+
+    return view('app.animal_detalhes.show', compact('animal', 'detalhes', 'procedimentos'));
+}
+
 
 
     public function edit($id)

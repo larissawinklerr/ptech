@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Rebanho;
 use App\Models\Animal;
 use App\Models\AnimalDetalhes;
@@ -11,13 +12,13 @@ class RebanhoController extends Controller
 {
     public function index()
     {
-        $rebanhos = Rebanho::all();
+        $rebanhos = Rebanho::where('user_id', Auth::id())->get();
         return view('app.rebanhos.index', compact('rebanhos'));
     }
 
     public function create()
     {
-        $animais = Animal::with('detalhes')->get();
+        $animais = Animal::with('detalhes')->where('user_id', Auth::id())->get();
         return view('app.rebanhos.create', compact('animais'));
     }
 
@@ -31,6 +32,7 @@ class RebanhoController extends Controller
 
         $rebanho = Rebanho::create([
             'nome' => $request->input('nome'),
+            'user_id' => Auth::id(),
         ]);
 
         if ($request->has('animais')) {
@@ -41,24 +43,30 @@ class RebanhoController extends Controller
         return redirect()->route('app.rebanhos.index')->with('success', 'Rebanho criado com sucesso!');
     }
 
-    // ✅ Agora o método show está fora do store, como deve ser
     public function show($id)
     {
-        $rebanho = Rebanho::with('animais.detalhes')->findOrFail($id);
+        $rebanho = Rebanho::with('animais.detalhes')
+            ->where('user_id', Auth::id())
+            ->findOrFail($id);
+
         return view('app.rebanhos.show', compact('rebanho'));
     }
 
     public function edit($id)
     {
-        $rebanho = Rebanho::with('animais.detalhes')->findOrFail($id);
-        $animais = Animal::with('detalhes')->get();
+        $rebanho = Rebanho::with('animais.detalhes')
+            ->where('user_id', Auth::id())
+            ->findOrFail($id);
+
+        $animais = Animal::with('detalhes')->where('user_id', Auth::id())->get();
         $rebanhoAnimais = $rebanho->animais->pluck('id')->toArray();
+
         return view('app.rebanhos.edit', compact('rebanho', 'animais', 'rebanhoAnimais'));
     }
 
     public function update(Request $request, $id)
     {
-        $rebanho = Rebanho::findOrFail($id);
+        $rebanho = Rebanho::where('user_id', Auth::id())->findOrFail($id);
 
         $request->validate([
             'nome' => 'required|string|max:255',
@@ -66,9 +74,7 @@ class RebanhoController extends Controller
             'animais.*' => 'exists:animais,id',
         ]);
 
-        $rebanho->update([
-            'nome' => $request->input('nome'),
-        ]);
+        $rebanho->update(['nome' => $request->input('nome')]);
 
         AnimalDetalhes::where('rebanho_id', $rebanho->id)->update(['rebanho_id' => null]);
 
@@ -83,17 +89,19 @@ class RebanhoController extends Controller
 
     public function destroy($id)
     {
-        Rebanho::destroy($id);
+        $rebanho = Rebanho::where('user_id', Auth::id())->findOrFail($id);
+        $rebanho->delete();
+
         return redirect()->route('app.rebanhos.index')->with('success', 'Rebanho excluído com sucesso!');
     }
 
     public function removerAnimal($id)
-{
-    $animal = AnimalDetalhes::findOrFail($id);
-    $animal->rebanho_id = null;
-    $animal->save();
+    {
+        $animal = AnimalDetalhes::findOrFail($id);
+        $animal->rebanho_id = null;
+        $animal->save();
 
-    return back()->with('success', 'Animal removido do rebanho.');
+        return back()->with('success', 'Animal removido do rebanho.');
+    }
 }
 
-}

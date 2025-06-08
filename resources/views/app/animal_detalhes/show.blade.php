@@ -36,7 +36,6 @@
             </div>
 
             <div class="mt-4">
-                <a href="{{ route('app.animal_detalhes.edit', $animal->id) }}" class="btn btn-primary me-2">Editar Detalhes</a>
                 <a href="{{ url()->previous() }}" class="btn btn-secondary">Voltar</a>
             </div>
         </div>

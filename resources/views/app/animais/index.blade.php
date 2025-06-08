@@ -23,15 +23,37 @@
                         <td>{{ $animal->detalhes->nome ?? '-' }}</td>
                         <td>{{ $animal->detalhes->brinco_chip ?? '-' }}</td>
                         <td class="text-center">
-                            <a href="{{ route('app.animal_detalhes.show', $animal->id) }}" class="btn btn-info btn-sm">Ver Detalhes</a>
-                            <a href="{{ route('app.animais.edit', $animal->id) }}" class="btn btn-primary btn-sm">Editar</a>
-                            <form action="{{ route('app.animais.destroy', $animal->id) }}" method="POST" class="d-inline">
-    @csrf
-    @method('DELETE')
-    <button type="button" class="btn btn-danger btn-sm btn-confirm-delete">Excluir</button>
-</form>
+    <a href="{{ route('app.animal_detalhes.show', $animal->id) }}" class="btn btn-info btn-sm">Ver Detalhes</a>
+    <a href="{{ route('app.animais.edit', $animal->id) }}" class="btn btn-primary btn-sm">Editar</a>
 
-                        </td>
+    <!-- Botão que ativa o modal -->
+    <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#modalExcluir{{ $animal->id }}">
+        Excluir
+    </button>
+
+    <!-- Modal -->
+    <div class="modal fade" id="modalExcluir{{ $animal->id }}" tabindex="-1" aria-labelledby="modalLabel{{ $animal->id }}" aria-hidden="true">
+      <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="modalLabel{{ $animal->id }}">Confirmar Exclusão</h5>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+          </div>
+          <div class="modal-body">
+            Tem certeza que deseja excluir o animal <strong>{{ $animal->detalhes->nome ?? '-' }}</strong>?
+          </div>
+          <div class="modal-footer">
+            <form action="{{ route('app.animais.destroy', $animal->id) }}" method="POST">
+                @csrf
+                @method('DELETE')
+                <button type="submit" class="btn btn-danger">Sim, excluir</button>
+            </form>
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+          </div>
+        </div>
+      </div>
+    </div>
+</td>
                     </tr>
                 @endforeach
             </tbody>
@@ -60,4 +82,20 @@
         background-color: rgba(255, 255, 255, 0.8);
     }
 </style>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function () {
+        const deleteButtons = document.querySelectorAll('.btn-confirm-delete');
+
+        deleteButtons.forEach(button => {
+            button.addEventListener('click', function (event) {
+                const confirmed = confirm('Tem certeza que deseja excluir este animal?');
+                if (!confirmed) {
+                    event.preventDefault();
+                }
+            });
+        });
+    });
+</script>
+
 @endpush

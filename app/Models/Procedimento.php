@@ -16,6 +16,7 @@ class Procedimento extends Model
         'nome_procedimento',
         'observacoes',
         'data',
+        'user_id',
     ];
 
 

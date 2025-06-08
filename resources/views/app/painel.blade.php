@@ -9,7 +9,6 @@
 
     <div class="row justify-content-center">
 
-        <!-- Card Animais -->
         <div class="col-md-3 col-6 mb-4">
             <a href="{{ route('app.animais.index') }}" class="text-decoration-none text-dark">
                 <div class="card h-100 shadow-sm border-0 hover-card">
@@ -21,7 +20,6 @@
             </a>
         </div>
 
-        <!-- Card Procedimentos -->
         <div class="col-md-3 col-6 mb-4">
             <a href="{{ route('app.procedimentos.index') }}" class="text-decoration-none text-dark">
                 <div class="card h-100 shadow-sm border-0 hover-card">
@@ -33,7 +31,6 @@
             </a>
         </div>
 
-        <!-- Card Rebanhos -->
         <div class="col-md-3 col-6 mb-4">
             <a href="{{ route('app.rebanhos.index') }}" class="text-decoration-none text-dark">
                 <div class="card h-100 shadow-sm border-0 hover-card">
@@ -45,7 +42,6 @@
             </a>
         </div>
 
-        <!-- Card Relatórios -->
         <div class="col-md-3 col-6 mb-4">
             <a href="#" class="text-decoration-none text-dark">
                 <div class="card h-100 shadow-sm border-0 hover-card">

@@ -95,11 +95,17 @@
                 @endguest
             @endif
 
-            @auth
-                @if ($isApp)
-                    <a href="{{ route('site.logout') }}">Sair</a>
-                @endif
-            @endauth
+@auth
+    @if ($isApp)
+        <form id="logout-form" action="{{ route('site.logout') }}" method="POST" style="display: inline;">
+            @csrf
+            <button type="submit" class="btn btn-link text-white" style="text-decoration: none; border: none; background: none; padding: 0; margin-left: 20px;">
+                <i class="fas fa-sign-out-alt"></i> Sair
+            </button>
+        </form>
+    @endif
+@endauth
+
         </div>
     </div>
 
@@ -111,9 +117,17 @@
             @yield('content')
         </div>
 
-    @if($isHome)
+        @if($isHome)
         </div>
     @endif
+
+    @if (!Auth::check() && request()->is('app/*'))
+    <script>
+        alert("Sessão expirada ou acesso não autorizado. Faça login novamente.");
+        window.location.href = "{{ route('login') }}";
+    </script>
+@endif
+
 
 </body>
 </html>

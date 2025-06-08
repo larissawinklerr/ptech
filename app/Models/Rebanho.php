@@ -14,6 +14,7 @@ class Rebanho extends Model
     protected $fillable = [
         'nome',
         'descricao',
+        'user_id',
     ];
 
     public function animais()
@@ -24,7 +25,7 @@ class Rebanho extends Model
             'rebanho_id',            
             'id',                    
             'id',                    
-            'animal_id'              
+            'animal_id',              
         );
     }
 }

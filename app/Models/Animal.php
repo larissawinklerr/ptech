@@ -17,6 +17,7 @@ class Animal extends Model
         'peso',
         'sexo',
         'fertilidade',
+        'user_id',
     ];
 
     public function detalhes()

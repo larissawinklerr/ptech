@@ -25,11 +25,35 @@
                         <td class="text-center">
                             <a href="{{ route('app.rebanhos.show', $rebanho->id) }}" class="btn btn-info btn-sm">Ver</a>
                             <a href="{{ route('app.rebanhos.edit', $rebanho->id) }}" class="btn btn-primary btn-sm">Editar</a>
-                            <form action="{{ route('app.rebanhos.destroy', $rebanho->id) }}" method="POST" class="d-inline">
-                                @csrf
-                                @method('DELETE')
-                                <button class="btn btn-danger btn-sm" onclick="return confirm('Tem certeza que deseja excluir este rebanho?')">Excluir</button>
-                            </form>
+
+                            <!-- Botão que ativa o modal -->
+                            <button type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#modalExcluir{{ $rebanho->id }}">
+                                Excluir
+                            </button>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="modalExcluir{{ $rebanho->id }}" tabindex="-1" aria-labelledby="modalLabel{{ $rebanho->id }}" aria-hidden="true">
+                              <div class="modal-dialog modal-dialog-centered">
+                                <div class="modal-content">
+                                  <div class="modal-header">
+                                    <h5 class="modal-title" id="modalLabel{{ $rebanho->id }}">Confirmar Exclusão</h5>
+                                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Fechar"></button>
+                                  </div>
+                                  <div class="modal-body">
+                                    Tem certeza que deseja excluir o rebanho <strong>{{ $rebanho->nome }}</strong>?
+                                  </div>
+                                  <div class="modal-footer">
+                                    <form action="{{ route('app.rebanhos.destroy', $rebanho->id) }}" method="POST">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button type="submit" class="btn btn-danger">Sim, excluir</button>
+                                    </form>
+                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+
                         </td>
                     </tr>
                 @endforeach
