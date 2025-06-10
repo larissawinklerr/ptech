@@ -4,8 +4,15 @@
 
 @section('content')
     <div class="container text-center mt-5">
-        <h2 class="mb-4">Olá, {{ Auth::user()->name }} 👋</h2>
-        <p class="mb-5">Escolha uma funcionalidade:</p>
+        <h2 class="mb-4">
+            <b>
+                Olá, {{ Auth::user()->name }}
+                </b> 👋</h2>
+        <p class="mb-5">
+            <b>
+            Escolha uma funcionalidade:
+           </b> 
+        </p>
 
         <div class="row justify-content-center">
 
@@ -30,7 +37,9 @@
                     </div>
                 </a>
             </div>
+        </div>
 
+         <div class="row justify-content-center">
             <div class="col-md-3 col-6 mb-4">
                 <a href="{{ route('app.rebanhos.index') }}" class="text-decoration-none text-dark">
                     <div class="card h-100 shadow-sm border-0 hover-card">
@@ -52,8 +61,7 @@
                     </div>
                 </a>
             </div>
-
-        </div>
+         </div>
     </div>
 @endsection
 
@@ -61,7 +69,6 @@
     <style>
         .hover-card {
             transition: transform 0.2s ease, box-shadow 0.2s ease;
-            border-radius: 12px;
         }
 
         .hover-card:hover {

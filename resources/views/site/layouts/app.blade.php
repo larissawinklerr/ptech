@@ -34,7 +34,7 @@
             background-color: #2c1c0f;
             color: #fff;
             min-height: 100vh;
-            padding: 20px;
+            padding: 60px;
         }
 
         .sidebar a {
@@ -51,9 +51,8 @@
 
         .main-content {
             padding: 30px;
-            background-color: rgba(255, 255, 255, 0.9);
+            background-color: rgba(255, 255, 255, 0.4);
             min-height: 100vh;
-            border-radius: 12px;
         }
 
         .logo {
@@ -81,8 +80,10 @@
             <a href="{{ route('app.rebanhos.index') }}">REBANHO</a>
             <a href="{{ route('relatorio.index') }}">RELATÓRIOS</a>
 
-            <div class="mt-auto">
-                <a href="{{ route('site.logout') }}">SAIR</a>
+           <hr>
+
+            <div class="mt-auto" style="border: 1px solid; border-radius: 10px; padding: 0.5rem;">
+                <a style=" margin: 0;" href="{{ route('site.logout') }}">SAIR</a>
             </div>
         </div>
 
