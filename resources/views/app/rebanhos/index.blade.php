@@ -72,7 +72,6 @@
 @push('styles')
     <style>
         .rounded-table {
-            border-radius: 12px;
             overflow: hidden;
         }
 
