@@ -9,20 +9,26 @@ use App\Http\Controllers\RebanhoController;
 use App\Http\Controllers\ProcedimentoController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\RelatorioController;
+use Illuminate\Support\Facades\Route;
 
-// Rotas públicas com cache desabilitado
+// Rotas públicas
 Route::get('/', [PrincipalController::class, 'principal'])->name('site.index');
 Route::get('/sobre-nos', [SobreNosController::class, 'sobreNos'])->name('site.sobrenos');
-Route::get('/login/{erro?}', [LoginController::class, 'index'])->name('site.login');
-Route::post('/login', [LoginController::class, 'autenticar']);
-Route::get('/register', [RegisterController::class, 'show'])->name('site.register');
-Route::post('/register', [RegisterController::class, 'store'])->name('site.register.store');
 
-// Logout
+// Rotas de autenticação
+Route::middleware('guest')->group(function () {
+    Route::get('/login/{erro?}', [LoginController::class, 'index'])->name('site.login');
+    Route::post('/login', [LoginController::class, 'autenticar']);
+    Route::get('/register', [RegisterController::class, 'show'])->name('site.register');
+    Route::post('/register', [RegisterController::class, 'store'])->name('site.register.store');
+});
+
+// Logout - deve estar fora do grupo de autenticação
 Route::get('/logout', [LoginController::class, 'sair'])->name('site.logout');
 
-// Rotas protegidas
-Route::middleware(['auth'])->prefix('app')->group(function () {
+// Rotas protegidas do app
+Route::middleware(['auth', 'app'])->prefix('app')->group(function () {
+    // Painel
     Route::get('/painel', [PrincipalController::class, 'painel'])->name('app.painel');
 
     // Rotas de animais
@@ -62,6 +68,4 @@ Route::middleware(['auth'])->prefix('app')->group(function () {
     Route::get('/relatorios', [RelatorioController::class, 'index'])->name('relatorio.index');
     Route::get('/relatorios/animais', [RelatorioController::class, 'todos'])->name('relatorio.animais');
     Route::get('/relatorios/animais/filtrado', [RelatorioController::class, 'filtrado'])->name('relatorio.animais.filtrado');
-
-
 });

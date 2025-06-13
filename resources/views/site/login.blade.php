@@ -5,25 +5,43 @@
         <div class="p-5 bg-white rounded shadow" style="max-width: 500px; width: 100%;">
             <h2 class="text-center mb-4 text-dark">Login no Sistema</h2>
 
+            @if ($errors->any())
+                <div class="alert alert-danger">
+                    <h5 class="alert-heading">Por favor, corrija os seguintes erros:</h5>
+                    <ul class="mb-0">
+                        @foreach ($errors->all() as $erro)
+                            <li>{{ $erro }}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
+
             <form action="{{ route('site.login') }}" method="POST">
                 @csrf
 
                 <div class="mb-3">
                     <label for="email" class="form-label text-dark">E-mail</label>
-                    <input type="email" name="email" id="email" class="form-control" placeholder="Digite seu e-mail"
+                    <input type="email" name="email" id="email" 
+                        class="form-control @error('email') is-invalid @enderror" 
+                        placeholder="Digite seu e-mail"
                         value="{{ old('email') }}">
-                    @if ($errors->has('email'))
-                        <div class="text-danger">{{ $errors->first('email') }}</div>
-                    @endif
+                    @error('email')
+                        <div class="invalid-feedback d-block">
+                            {{ $message }}
+                        </div>
+                    @enderror
                 </div>
 
                 <div class="mb-3">
                     <label for="senha" class="form-label text-dark">Senha</label>
-                    <input type="password" name="senha" id="senha" class="form-control"
+                    <input type="password" name="senha" id="senha" 
+                        class="form-control @error('senha') is-invalid @enderror"
                         placeholder="Digite sua senha">
-                    @if ($errors->has('senha'))
-                        <div class="text-danger">{{ $errors->first('senha') }}</div>
-                    @endif
+                    @error('senha')
+                        <div class="invalid-feedback d-block">
+                            {{ $message }}
+                        </div>
+                    @enderror
                 </div>
 
                 @if (isset($erro) && $erro != '')

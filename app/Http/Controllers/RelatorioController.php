@@ -12,7 +12,10 @@ class RelatorioController extends Controller
 {
     public function index()
     {
-        $rebanhos = Rebanho::orderBy('nome')->get();
+        $rebanhos = Rebanho::where('user_id', auth()->id())
+            ->orderBy('nome')
+            ->get();
+
         return view('app.relatorios.index', compact('rebanhos'));
     }
 
@@ -20,14 +23,12 @@ class RelatorioController extends Controller
     {
         $query = Animal::query();
 
-        // ✅ Filtro por rebanho (está em AnimalDetalhes)
         if ($request->filled('rebanho_id')) {
             $query->whereHas('detalhes', function ($q) use ($request) {
                 $q->where('rebanho_id', $request->rebanho_id);
             });
         }
 
-        // ✅ Filtro por nome do animal (direto em Animal)
         if ($request->filled('nome')) {
             $query->where('nome', 'like', '%' . $request->nome . '%');
         }
@@ -38,5 +39,13 @@ class RelatorioController extends Controller
         return $pdf->download('relatorio_animais_filtrado.pdf');
 
         $query = Animal::with('detalhes');
+    }
+
+    public function todos()
+    {
+        $animais = \App\Models\Animal::with('detalhes')->get();
+
+        $pdf = \Barryvdh\DomPDF\Facade\Pdf::loadView('app.relatorios.animais', compact('animais'));
+        return $pdf->download('relatorio_todos_animais.pdf');
     }
 }
