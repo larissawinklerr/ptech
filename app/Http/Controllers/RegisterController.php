@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Validator;
 
 class RegisterController extends Controller
 {
@@ -15,7 +16,7 @@ class RegisterController extends Controller
 
     public function store(Request $request)
     {
-        $request->validate([
+        $validator = Validator::make($request->all(), [
             'name' => 'required|string|max:255',
             'email' => [
                 'required',
@@ -50,6 +51,16 @@ class RegisterController extends Controller
             'confirmarSenha.min' => 'A confirmação de senha deve ter no mínimo 6 caracteres.',
             'confirmarSenha.same' => 'As senhas não coincidem.'
         ]);
+
+        if ($validator->fails()) {
+            return back()->withErrors($validator)->withInput();
+        }
+
+        // Verifica se o domínio do email existe
+        $emailParts = explode('@', $request->email);
+        if (count($emailParts) !== 2 || !checkdnsrr($emailParts[1], 'MX')) {
+            return back()->withErrors(['email' => 'O domínio do e-mail não é válido ou não existe.'])->withInput();
+        }
 
         User::create([
             'name' => $request->name,
