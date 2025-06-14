@@ -9,6 +9,8 @@ use App\Http\Controllers\RebanhoController;
 use App\Http\Controllers\ProcedimentoController;
 use App\Http\Controllers\RegisterController;
 use App\Http\Controllers\RelatorioController;
+use App\Http\Controllers\ForgotPasswordController;
+use App\Http\Controllers\ResetPasswordController;
 use Illuminate\Support\Facades\Route;
 
 // Rotas públicas
@@ -25,6 +27,18 @@ Route::middleware('guest')->group(function () {
 
 // Logout - deve estar fora do grupo de autenticação
 Route::get('/logout', [LoginController::class, 'sair'])->name('site.logout');
+
+// Rotas de recuperação de senha
+Route::get('forgot-password', [ForgotPasswordController::class, 'showLinkRequestForm'])
+    ->name('password.request');
+Route::post('forgot-password', [ForgotPasswordController::class, 'sendResetLinkEmail'])
+    ->name('password.email');
+
+// Rotas de redefinição de senha
+Route::get('reset-password/{token}', [ResetPasswordController::class, 'showResetForm'])
+    ->name('password.reset');
+Route::post('reset-password', [ResetPasswordController::class, 'reset'])
+    ->name('password.update');
 
 // Rotas protegidas do app
 Route::middleware(['auth', 'app'])->prefix('app')->group(function () {
