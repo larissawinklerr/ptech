@@ -3,7 +3,13 @@
 @section('content')
     <div class="d-flex justify-content-center align-items-center" style="min-height: 80vh;">
         <div class="p-5 bg-white rounded shadow" style="max-width: 500px; width: 100%;">
-            <h2 class="text-center mb-4 text-dark">Login no Sistema</h2>
+            <h2 class="text-center mb-4 text-dark">Recuperar Senha</h2>
+
+            @if (session('status'))
+                <div class="alert alert-success">
+                    {{ session('status') }}
+                </div>
+            @endif
 
             @if ($errors->any())
                 <div class="alert alert-danger">
@@ -16,13 +22,7 @@
                 </div>
             @endif
 
-            @if (session('status'))
-                <div class="alert alert-success">
-                    {{ session('status') }}
-                </div>
-            @endif
-
-            <form action="{{ route('site.login') }}" method="POST">
+            <form method="POST" action="{{ route('password.email') }}">
                 @csrf
 
                 <div class="mb-3">
@@ -30,7 +30,8 @@
                     <input type="email" name="email" id="email" 
                         class="form-control @error('email') is-invalid @enderror" 
                         placeholder="Digite seu e-mail"
-                        value="{{ old('email') }}">
+                        value="{{ old('email') }}"
+                        required>
                     @error('email')
                         <div class="invalid-feedback d-block">
                             {{ $message }}
@@ -38,27 +39,11 @@
                     @enderror
                 </div>
 
-                <div class="mb-3">
-                    <label for="senha" class="form-label text-dark">Senha</label>
-                    <input type="password" name="senha" id="senha" 
-                        class="form-control @error('senha') is-invalid @enderror"
-                        placeholder="Digite sua senha">
-                    @error('senha')
-                        <div class="invalid-feedback d-block">
-                            {{ $message }}
-                        </div>
-                    @enderror
-                </div>
-
-                @if (isset($erro) && $erro != '')
-                    <div class="alert alert-danger">{{ $erro }}</div>
-                @endif
-
                 <div class="d-grid gap-2">
-                    <button type="submit" class="btn btn-success">Acessar</button>
-                    <a href="{{ route('password.request') }}" class="btn btn-link text-decoration-none">Esqueceu sua senha?</a>
+                    <button type="submit" class="btn btn-primary">Enviar Link de Recuperação</button>
+                    <a href="{{ route('site.login') }}" class="btn btn-link text-decoration-none">Voltar para o Login</a>
                 </div>
             </form>
         </div>
     </div>
-@endsection
+@endsection 
