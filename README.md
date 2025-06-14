@@ -85,6 +85,6 @@ Ou acesse: https://ptechgestao.com.br
 
     Faça um cadastro ou utilize login
     
-    usuarioteste@gmail.com
+    usuariotesteptech@gmail.com
     
-    usuarioteste123
+    Usuarioteste123@
