@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="pt-br">
+
 <head>
     <meta charset="UTF-8">
     <title>Relatório de Animais</title>
@@ -7,43 +8,63 @@
         body {
             font-family: DejaVu Sans, sans-serif;
             font-size: 12px;
-            margin: 20px;
+            margin: 30px;
+            color: #333;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        header img {
+            height: 70px;
+            display: block;
+            margin: 0 auto 10px;
         }
 
         h2 {
-            text-align: center;
-            margin-bottom: 30px;
+            margin: 0;
+            font-size: 20px;
+            font-weight: bold;
         }
 
         table {
             width: 100%;
             border-collapse: collapse;
-            margin: 0 auto;
+            margin-top: 20px;
         }
 
-        th, td {
-            border: 1px solid #aaa;
-            padding: 8px;
+        th,
+        td {
+            border: 1px solid #555;
+            padding: 6px 10px;
             text-align: center;
         }
 
         th {
-            background-color: #f5f5f5;
-            font-weight: bold;
+            background-color: #e9e9e9;
         }
 
         tr:nth-child(even) {
-            background-color: #f9f9f9;
+            background-color: #f8f8f8;
         }
 
-        .info-vazia {
-            color: #888;
+        .no-data {
+            text-align: center;
+            color: #777;
             font-style: italic;
+            padding: 20px;
         }
     </style>
 </head>
+
 <body>
-    <h2>📋 Relatório de Animais</h2>
+
+    <header>
+        <img src="{{ public_path('img/logo.png') }}" alt="Logo PTECH">
+        <h2>Relatório de Animais</h2>
+    </header>
 
     <table>
         <thead>
@@ -52,29 +73,32 @@
                 <th>Raça</th>
                 <th>Sexo</th>
                 <th>Data de Nascimento</th>
-                <th>Peso (kg)</th>
+                <th>Peso Atual (kg)</th>
+                <th>Rebanho</th>
             </tr>
         </thead>
         <tbody>
-           @forelse($animais as $animal)
-    <tr>
-        <td>{{ $animal->nome }}</td>
-        <td>{{ $animal->detalhes->raca ?? '---' }}</td>
-        <td>{{ strtoupper($animal->sexo ?? '---') }}</td>
-        <td>
-            {{ $animal->detalhes->data_nascimento
-                ? \Carbon\Carbon::parse($animal->detalhes->data_nascimento)->format('d/m/Y')
-                : '---' }}
-        </td>
-        <td>{{ $animal->detalhes->peso_atual ?? '---' }}</td>
-    </tr>
-@empty
-    <tr>
-        <td colspan="5" class="info-vazia">Nenhum animal encontrado para os critérios selecionados.</td>
-    </tr>
-@endforelse
-
+            @forelse($animais as $animal)
+                <tr>
+                    <td>{{ $animal->detalhes->nome ?? '---' }}</td>
+                    <td>{{ $animal->detalhes->raca ?? '---' }}</td>
+                    <td>{{ strtoupper($animal->sexo ?? '---') }}</td>
+                    <td>
+                        {{ $animal->detalhes->data_nascimento
+                            ? \Carbon\Carbon::parse($animal->detalhes->data_nascimento)->format('d/m/Y')
+                            : '---' }}
+                    </td>
+                    <td>{{ $animal->detalhes->peso_atual ?? '---' }}</td>
+                    <td>{{ $animal->detalhes->rebanho->nome ?? '---' }}</td>
+                </tr>
+            @empty
+                <tr>
+                    <td colspan="6" class="no-data">Nenhum animal encontrado para os filtros selecionados.</td>
+                </tr>
+            @endforelse
         </tbody>
     </table>
+
 </body>
+
 </html>
